@@ -1,12 +1,18 @@
 package hn.is501.proyecto.pinterest.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -41,4 +47,11 @@ public class Perfiles {
 
     @OneToOne(mappedBy = "PerfilTablero")
     private Tableros TableroMostrado;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="TBL_BUSQUEDAXPERFIL",
+    joinColumns = @JoinColumn(name="codigoperfilbuscado"),
+    inverseJoinColumns = @JoinColumn(name="codigobusqueda"))
+    private List<Busquedas> BusquedaRealizadas;
+
 }

@@ -65,14 +65,12 @@ public class Usuarios {
     @JoinColumn(name = "codigoestadocivil", referencedColumnName = "codigoestadocivil")
     private EstadoCivil estadoCivilUsuario;
 
-
     @OneToMany(mappedBy = "usuarioSeguido")
     private List<Seguidores> usuariosSeguidos;
 
     @OneToMany(mappedBy = "usuarioSeguidor")
     private List<Seguidores> usuariosSeguidores;
 
-    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="TBL_BUSQUEDAXUSUARIO",
     joinColumns = @JoinColumn(name="codigousuario"),
@@ -81,4 +79,22 @@ public class Usuarios {
 
     @OneToOne (mappedBy = "usuarioPerfil")
     private Perfiles perfilUsuario; 
+
+    @OneToMany(mappedBy = "usuarioCreadorTablero")
+    private List<Tableros> tablerosCreados ;
+
+    @OneToMany(mappedBy = "usuarioTableroGrupal")
+    private List<TablerosGrupales> tablerosGrupalesCreados;
+
+    @OneToMany(mappedBy = "usuarioPin")
+    private List<Pines> pinesCreados;
+
+    @OneToMany(mappedBy = "usuarioEmisorComentario")
+    private List<Comentarios> comentariosUsuario;
+    
+    @OneToMany(mappedBy = "usuarioEmisorMensaje")
+    private List<Mensajes> mensajesEnviados;
+
+    @OneToMany(mappedBy = "usuarioReceptorMensaje")
+    private List<Mensajes> mensajesRecibidos;
 }

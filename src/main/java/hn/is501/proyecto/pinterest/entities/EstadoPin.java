@@ -1,8 +1,11 @@
 package hn.is501.proyecto.pinterest.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -18,4 +21,6 @@ public class EstadoPin {
     @Column(name="estadopin")
     private String EstadoPin;
     
+    @OneToMany(mappedBy = "estadoPin")
+    private List<Pines> pines;
 }

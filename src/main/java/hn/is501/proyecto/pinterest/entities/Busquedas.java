@@ -30,7 +30,9 @@ public class Busquedas {
     @JoinColumn(name = "codigousuariodebusqueda", referencedColumnName = "codigousuario")
     private Usuarios usuarioBusqueda;
 
-    @JsonBackReference
-    @ManyToMany
+    @ManyToMany(mappedBy = "BusquedasRealizadas")
     private List<Usuarios> UsuariosBuscados;
+
+    @ManyToMany(mappedBy = "BusquedaRealizadas")
+    private List<Perfiles> PerfilesBuscados;
 }
