@@ -3,11 +3,15 @@ package hn.is501.proyecto.pinterest.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -25,6 +29,7 @@ public class Tableros {
     
     @Id
     @Column(name="codigotablero")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int CodigoTablero;
 
     @Column(name="nombretablero")
@@ -33,21 +38,27 @@ public class Tableros {
     @Column(name="fechacreaciontablero")
     private LocalDate FechaCreacionTablero;
 
-    @Lob
     @Column(name="fotopresentaciontablero")
-    private byte[] FotoPresentacionTablero;
+    private String FotoPresentacionTablero;
 
+    //@JsonManagedReference("utab")
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "codigousuariocreadortablero", referencedColumnName = "codigousuario")
     private Usuarios usuarioCreadorTablero;
 
-    @OneToOne
+     //@JsonManagedReference("pertab")
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="codigotableromostradoenperfil", referencedColumnName = "codigoperfil")
     private Perfiles PerfilTablero;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JsonManagedReference("tabpin")
     @JoinTable(name="TBL_TABLEROSXPINES",
     joinColumns = @JoinColumn(name="codigotablerodelpin"),
     inverseJoinColumns = @JoinColumn(name="codigopinentablero"))
     private List<Pines> pinesEnTablero;
+
+    
 }

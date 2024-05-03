@@ -5,7 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import hn.is501.proyecto.pinterest.entities.Usuarios;
 
+
+
 @Repository
 public interface UsuariosRepository extends CrudRepository<Usuarios, Integer>{
-    
+
+    Usuarios findByNombres(String nombres);
+
+Usuarios findByCorreo(String correo);
 }

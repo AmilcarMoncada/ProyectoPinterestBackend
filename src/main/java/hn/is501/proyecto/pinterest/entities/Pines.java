@@ -4,12 +4,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -23,8 +26,10 @@ public class Pines {
     
     @Id
     @Column(name = "codigopin")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int CodigoPin;
 
+     //@JsonBackReference("upin")
     @ManyToOne
     @JoinColumn(name = "codigousuariocreadorpin", referencedColumnName = "codigousuario")
     private Usuarios usuarioPin;
@@ -35,21 +40,22 @@ public class Pines {
     @Column(name = "fechacreacionpin")
     private LocalDate FechaCreacionPin;
 
-    @Lob
     @Column(name="pin")
-    private byte[] Pin;
+    private String Pin;
 
     @Column(name = "dimensionespin")
     private String DimensionesPin;
 
     @ManyToOne
+    @JsonBackReference("pinest")
     @JoinColumn(name = "codigoestadopin", referencedColumnName = "codigoestadopin")
     private EstadoPin estadoPin;
 
-    @JsonBackReference
+    @JsonBackReference("tabpin")
     @ManyToMany(mappedBy = "pinesEnTablero")
     private List<Tableros> tablerosPin;
 
+    @JsonBackReference("compin")
     @OneToMany(mappedBy = "pinComentado")
     private List<Comentarios> comentariosPin;
 }
